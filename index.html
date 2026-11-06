@@ -1,0 +1,689 @@
+<title>Kẹo Mút Lạc Hồng</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: classroom board — big puzzle stage on the left, player roll + lollipop tally on the right; stacks on phones. */
+:root {
+  --bg: #eef6f2;
+  --surface: #ffffff;
+  --surface-2: #f6faf8;
+  --ink: #1d2a4a;
+  --muted: #5d6b86;
+  --line: #d6e3dd;
+  --candy: #e2385f;
+  --candy-soft: #fde3ea;
+  --sun: #ffbf2e;
+  --sun-soft: #fff3d1;
+  --leaf: #13917f;
+  --leaf-soft: #d7f2ec;
+  --blank: #fff7e0;
+  --shadow: 0 2px 0 rgba(29,42,74,.08), 0 10px 28px -14px rgba(29,42,74,.25);
+  --f-display: "Baloo 2", "Nunito", system-ui, sans-serif;
+  --f-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --stars: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111a33; --surface: #1a2546; --surface-2: #162040; --ink: #eef2ff; --muted: #a3afcf;
+    --line: #2d3a63; --candy: #ff6b8d; --candy-soft: #3d2340; --sun: #ffd25e; --sun-soft: #3a3426;
+    --leaf: #45d3bd; --leaf-soft: #173d43; --blank: #24305a;
+    --shadow: 0 2px 0 rgba(0,0,0,.25), 0 12px 30px -12px rgba(0,0,0,.6);
+    --stars: radial-gradient(1.5px 1.5px at 12% 18%, #fff8 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, #fff6 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 12%, #fff7 50%, transparent 51%), radial-gradient(1px 1px at 81% 40%, #fff6 50%, transparent 51%), radial-gradient(2px 2px at 92% 85%, #ffd25e88 50%, transparent 51%), radial-gradient(1px 1px at 6% 90%, #fff5 50%, transparent 51%), radial-gradient(1.5px 1.5px at 70% 62%, #fff5 50%, transparent 51%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111a33; --surface: #1a2546; --surface-2: #162040; --ink: #eef2ff; --muted: #a3afcf;
+  --line: #2d3a63; --candy: #ff6b8d; --candy-soft: #3d2340; --sun: #ffd25e; --sun-soft: #3a3426;
+  --leaf: #45d3bd; --leaf-soft: #173d43; --blank: #24305a;
+  --shadow: 0 2px 0 rgba(0,0,0,.25), 0 12px 30px -12px rgba(0,0,0,.6);
+  --stars: radial-gradient(1.5px 1.5px at 12% 18%, #fff8 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, #fff6 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 12%, #fff7 50%, transparent 51%), radial-gradient(1px 1px at 81% 40%, #fff6 50%, transparent 51%), radial-gradient(2px 2px at 92% 85%, #ffd25e88 50%, transparent 51%), radial-gradient(1px 1px at 6% 90%, #fff5 50%, transparent 51%), radial-gradient(1.5px 1.5px at 70% 62%, #fff5 50%, transparent 51%);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { min-height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.5;
+  transition: background-color .4s ease, color .4s ease;
+}
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: var(--stars); background-size: 420px 420px;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+/* ---------- header ---------- */
+header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand svg { flex: none; width: 52px; height: 52px; }
+.brand h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.3rem); line-height: 1; margin: 0; text-wrap: balance; }
+.brand h1 span { color: var(--candy); }
+.brand p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.btn {
+  border: 2px solid var(--line); background: var(--surface); border-radius: 999px;
+  padding: 8px 16px; font-weight: 800; font-size: .95rem; display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: 0 2px 0 var(--line); transition: transform .1s ease, background-color .2s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); box-shadow: none; }
+.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.btn.primary { background: var(--candy); border-color: var(--candy); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--candy) 60%, #000); }
+.btn.go { background: var(--leaf); border-color: var(--leaf); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--leaf) 60%, #000); }
+.btn.big { padding: 12px 26px; font-size: 1.1rem; }
+.btn svg { width: 18px; height: 18px; }
+
+/* ---------- main grid ---------- */
+.board { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
+@media (max-width: 860px) { .board { grid-template-columns: minmax(0, 1fr); } }
+
+.panel { background: var(--surface); border: 2px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+
+/* stage */
+.stage { padding: 22px clamp(16px, 3vw, 34px) 28px; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.turn { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.turn-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.turn-label { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 800; }
+.turn-name { font-family: var(--f-display); font-weight: 800; font-size: 1.7rem; line-height: 1.1; color: var(--candy); overflow-wrap: anywhere; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: var(--sun-soft); color: var(--ink); font-weight: 800; font-size: .85rem; font-variant-numeric: tabular-nums; }
+
+.clue { display: flex; align-items: center; gap: 16px; background: var(--surface-2); border: 2px dashed var(--line); border-radius: 18px; padding: 14px 18px; }
+.clue-emoji { font-size: 2.6rem; line-height: 1; flex: none; }
+.clue-text { min-width: 0; }
+.clue-text small { display: block; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 800; }
+.clue-text strong { font-size: 1.2rem; font-weight: 800; }
+
+.word { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; padding-block: 8px; }
+.syll { display: flex; gap: 8px; flex-wrap: nowrap; }
+.cell {
+  width: clamp(46px, 8vw, 70px); height: clamp(58px, 10vw, 86px);
+  border-radius: 14px; display: grid; place-items: center;
+  font-family: var(--f-display); font-weight: 800; font-size: clamp(1.8rem, 4.6vw, 2.9rem); line-height: 1;
+  background: var(--surface-2); border: 2px solid var(--line); color: var(--ink);
+}
+button.cell { background: var(--blank); border: 3px dashed var(--sun); color: var(--candy); padding: 0; }
+button.cell.filled { border-style: solid; }
+button.cell.next { animation: pulse 1.2s ease-in-out infinite; }
+.cell.right { background: var(--leaf-soft); border: 3px solid var(--leaf); color: var(--leaf); }
+.cell.wrong { background: var(--candy-soft); border: 3px solid var(--candy); color: var(--candy); }
+@keyframes pulse { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--sun) 35%, transparent); } }
+
+.howto { text-align: center; color: var(--muted); margin: -6px 0 0; font-size: .95rem; }
+
+.tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.tile {
+  min-width: 56px; height: 56px; padding: 0 10px; border-radius: 14px;
+  background: var(--surface); border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--ink);
+  font-family: var(--f-display); font-weight: 800; font-size: 1.8rem; line-height: 1;
+  transition: transform .08s ease, opacity .2s;
+}
+.tile:hover:not(:disabled) { transform: translateY(-2px); }
+.tile:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+.tile:disabled { opacity: .18; cursor: default; box-shadow: none; transform: translateY(4px); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+.feedback { text-align: center; border-radius: 16px; padding: 12px 16px; font-weight: 800; font-size: 1.15rem; }
+.feedback.ok { background: var(--leaf-soft); color: var(--leaf); }
+.feedback.no { background: var(--candy-soft); color: var(--candy); }
+.feedback.info { background: var(--sun-soft); color: var(--ink); font-weight: 700; font-size: 1rem; }
+
+.shake { animation: shake .45s ease; }
+@keyframes shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+
+/* sidebar */
+.side { padding: 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.side h2 { font-family: var(--f-display); font-weight: 800; font-size: 1.3rem; margin: 0; line-height: 1.2; }
+.side h2 small { font-family: var(--f-body); font-weight: 700; color: var(--muted); font-size: .85rem; margin-left: 6px; }
+form.add { display: flex; gap: 8px; }
+form.add input {
+  flex: 1; min-width: 0; border: 2px solid var(--line); background: var(--surface-2); color: var(--ink);
+  border-radius: 12px; padding: 10px 12px; font: inherit; font-weight: 700;
+}
+form.add input::placeholder { color: var(--muted); font-weight: 600; }
+.hint { color: var(--muted); font-size: .85rem; margin: -4px 0 0; }
+
+.roster { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.roster li { display: flex; align-items: center; gap: 4px; }
+.pick {
+  flex: 1; min-width: 0; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 8px;
+  text-align: left; background: var(--surface-2); border: 2px solid transparent; border-radius: 14px; padding: 8px 10px;
+}
+.pick:hover { border-color: var(--line); }
+.pick.current { border-color: var(--candy); background: var(--candy-soft); }
+.pick .rank { font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; text-align: center; }
+.pick .nm { font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pick .score { font-weight: 800; font-variant-numeric: tabular-nums; display: inline-flex; align-items: center; gap: 4px; }
+.pick .score .pop { font-size: 1.1rem; }
+.pick.bump .score { animation: bump .6s ease; }
+@keyframes bump { 40% { transform: scale(1.5); color: var(--candy); } }
+.del { flex: none; width: 34px; height: 34px; border-radius: 10px; border: 0; background: transparent; color: var(--muted); font-size: 1.2rem; line-height: 1; }
+.del:hover { background: var(--candy-soft); color: var(--candy); }
+.empty { color: var(--muted); background: var(--surface-2); border-radius: 14px; padding: 14px; font-size: .95rem; text-align: center; }
+
+.stats { display: flex; gap: 8px; flex-wrap: wrap; border-top: 2px dashed var(--line); padding-top: 12px; color: var(--muted); font-size: .88rem; font-weight: 700; }
+.stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* ---------- modal ---------- */
+.overlay { position: fixed; inset: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 55%, rgba(0,0,0,.55)); display: grid; place-items: center;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.modal { width: min(560px, 100%); max-height: 100%; overflow: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.modal h2 { font-family: var(--f-display); font-weight: 800; font-size: 1.9rem; margin: 0; line-height: 1.1; text-align: center; text-wrap: balance; }
+.modal p { margin: 0; text-align: center; color: var(--muted); }
+.podium { display: flex; justify-content: center; align-items: flex-end; gap: 10px; padding-top: 8px; }
+.step { flex: 1; max-width: 150px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.step .who { font-weight: 800; text-align: center; overflow-wrap: anywhere; line-height: 1.2; }
+.step .pops { font-weight: 800; font-variant-numeric: tabular-nums; }
+.step .block { width: 100%; border-radius: 12px 12px 4px 4px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 1.8rem; color: #fff; }
+.step.p1 .block { height: 120px; background: var(--candy); }
+.step.p2 .block { height: 86px; background: var(--leaf); }
+.step.p3 .block { height: 62px; background: var(--sun); color: #3a2a00; }
+.crown { font-size: 2rem; line-height: 1; }
+.final-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.final-list li { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 8px; padding: 6px 10px; border-radius: 10px; background: var(--surface-2); font-weight: 700; }
+.final-list li span:first-child { color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+.final-list li span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.final-list li span:last-child { font-variant-numeric: tabular-nums; font-weight: 800; }
+
+/* falling lollipops */
+.rain { position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden; }
+.rain span { position: absolute; top: -60px; font-size: 2.2rem; animation: fall 1.8s ease-in forwards; }
+@keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rain { display: none; }
+}
+@media (max-width: 480px) {
+  .syll { gap: 5px; }
+  .cell { width: 40px; height: 52px; border-radius: 10px; font-size: 1.6rem; }
+  .tile { min-width: 48px; height: 50px; font-size: 1.5rem; }
+  .word { gap: 10px 14px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="29" y="34" width="6" height="28" rx="3" fill="#c9b48a"/>
+        <circle cx="32" cy="24" r="22" fill="#e2385f"/>
+        <path d="M32 24 m0 -14 a14 14 0 1 1 -14 14 a9 9 0 1 1 9 -9 a5 5 0 1 1 5 5" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>Kẹo Mút <span>Lạc Hồng</span></h1>
+        <p>Đoán từ về các bộ phận bên ngoài cơ thể: tìm 3 chữ cái còn thiếu</p>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="themeBtn" type="button" aria-pressed="false"></button>
+      <button class="btn" id="stopBtn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg>
+        Dừng &amp; xem kết quả
+      </button>
+      <button class="btn" id="resetBtn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Chơi lại từ đầu
+      </button>
+    </div>
+  </header>
+
+  <main class="board">
+    <section class="panel stage" id="stage" aria-live="polite">
+      <div class="turn">
+        <div class="turn-who">
+          <div>
+            <div class="turn-label">Đến lượt</div>
+            <div class="turn-name" id="turnName">…</div>
+          </div>
+        </div>
+        <span class="chip" id="roundChip">Từ số 1</span>
+      </div>
+
+      <div class="clue">
+        <div class="clue-emoji" id="clueEmoji">👃</div>
+        <div class="clue-text">
+          <small>Gợi ý</small>
+          <strong id="clueText">…</strong>
+        </div>
+      </div>
+
+      <div class="word" id="word"></div>
+      <p class="howto" id="howto">Bấm vào chữ cái bên dưới để điền vào ô trống. Bấm vào ô đã điền để xoá.</p>
+
+      <div class="tiles" id="tiles"></div>
+
+      <div class="feedback" id="feedback" hidden></div>
+
+      <div class="actions">
+        <button class="btn go big" id="checkBtn" type="button" disabled>Kiểm tra</button>
+        <button class="btn primary big" id="nextBtn" type="button" hidden>Lượt tiếp theo ▸</button>
+        <button class="btn" id="skipBtn" type="button">Đổi từ khác</button>
+      </div>
+    </section>
+
+    <aside class="panel side">
+      <h2>Học sinh <small id="countLbl"></small></h2>
+      <form class="add" id="addForm" autocomplete="off">
+        <input id="nameInput" type="text" maxlength="30" placeholder="Nhập tên em…" aria-label="Tên học sinh">
+        <button class="btn primary" type="submit">Thêm</button>
+      </form>
+      <p class="hint">Bấm vào một tên để chọn bạn trả lời. Lượt chơi tự xoay vòng qua các tên.</p>
+      <ul class="roster" id="roster"></ul>
+      <div class="stats" id="stats"></div>
+    </aside>
+  </main>
+</div>
+
+<div class="overlay" id="resultsOv" hidden>
+  <div class="panel modal" role="dialog" aria-modal="true" aria-labelledby="resTitle">
+    <h2 id="resTitle">Kết quả</h2>
+    <p id="resSub"></p>
+    <div class="podium" id="podium"></div>
+    <ul class="final-list" id="finalList"></ul>
+    <div class="actions">
+      <button class="btn go" id="resumeBtn" type="button">Chơi tiếp</button>
+      <button class="btn primary" id="resReset" type="button">Chơi lại từ đầu</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="resetOv" hidden>
+  <div class="panel modal" role="dialog" aria-modal="true" aria-labelledby="rsTitle">
+    <h2 id="rsTitle">Chơi lại từ đầu?</h2>
+    <p>Số kẹo mút của mọi bạn sẽ về 0.</p>
+    <div class="actions">
+      <button class="btn go" id="rsKeep" type="button">Giữ tên, xoá kẹo</button>
+      <button class="btn primary" id="rsAll" type="button">Xoá hết tên và kẹo</button>
+      <button class="btn" id="rsCancel" type="button">Huỷ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // ---------- word bank: external body parts only ----------
+  const WORDS = [
+    { w: "miệng", e: "👄", h: "Dùng để ăn và nói" },
+    { w: "đôi mắt", e: "👀", h: "Dùng để nhìn" },
+    { w: "đôi tai", e: "👂", h: "Dùng để nghe" },
+    { w: "cái mũi", e: "👃", h: "Dùng để ngửi" },
+    { w: "mái tóc", e: "💇", h: "Mọc trên đầu, dài ra thì phải cắt" },
+    { w: "lông mày", e: "🤨", h: "Nằm ngay phía trên mắt" },
+    { w: "lông mi", e: "👁️", h: "Những sợi nhỏ ở mép mí mắt" },
+    { w: "cái trán", e: "🙂", h: "Phần ở trên lông mày" },
+    { w: "cái cằm", e: "🧔", h: "Phần ở dưới miệng" },
+    { w: "đôi má", e: "😊", h: "Hai bên mũi, ửng hồng khi ngại" },
+    { w: "đôi môi", e: "💋", h: "Bao quanh miệng" },
+    { w: "cái cổ", e: "🧣", h: "Nối đầu với thân, nơi quàng khăn" },
+    { w: "bờ vai", e: "🎒", h: "Nơi em đeo quai cặp sách" },
+    { w: "cánh tay", e: "💪", h: "Từ vai xuống đến bàn tay" },
+    { w: "bàn tay", e: "✋", h: "Có năm ngón, dùng để cầm nắm" },
+    { w: "ngón tay", e: "☝️", h: "Mỗi bàn tay có năm cái" },
+    { w: "móng tay", e: "💅", h: "Cần cắt ngắn cho sạch sẽ" },
+    { w: "khuỷu tay", e: "🦾", h: "Chỗ gập ở giữa cánh tay" },
+    { w: "cổ tay", e: "⌚", h: "Nơi đeo đồng hồ" },
+    { w: "bàn chân", e: "🦶", h: "Dùng để đứng và đi" },
+    { w: "ngón chân", e: "🩴", h: "Mỗi bàn chân có năm cái" },
+    { w: "đầu gối", e: "🦵", h: "Chỗ gập ở giữa chân" },
+    { w: "gót chân", e: "👠", h: "Phần phía sau của bàn chân" },
+    { w: "bắp chân", e: "🏃", h: "Phần to tròn ở sau cẳng chân" },
+    { w: "cái bụng", e: "🍚", h: "Kêu ọc ọc khi em đói" },
+    { w: "cái lưng", e: "🧍", h: "Phía sau thân người" },
+    { w: "cái rốn", e: "🎯", h: "Chấm nhỏ ở giữa bụng" },
+    { w: "mái đầu", e: "🧑", h: "Phần cao nhất của cơ thể" },
+  ];
+  const PREFIX = new Set(["cái", "đôi", "mái", "bờ"]);
+  const VOWEL_GROUPS = ["aàáảãạ","ăằắẳẵặ","âầấẩẫậ","eèéẻẽẹ","êềếểễệ","iìíỉĩị","oòóỏõọ","ôồốổỗộ","ơờớởỡợ","uùúủũụ","ưừứửữự","yỳýỷỹỵ"];
+  const CONSONANTS = "bcdđghklmnpqrstvx";
+  const ANY = CONSONANTS + "aăâeêioôơuưy" + "áàạếịóộờúứ";
+
+  const $ = (id) => document.getElementById(id);
+  const rand = (n) => Math.floor(Math.random() * n);
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rand(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const up = (c) => c.toLocaleUpperCase("vi");
+
+  // ---------- state ----------
+  const KEY = "keo-mut-lac-hong-v1";
+  let S = null;
+  function fresh(players) {
+    return { players: players || [], current: 0, deck: shuffle(WORDS.map((_, i) => i)), asked: 0, correct: 0, puzzle: null, theme: null, lastBump: null };
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  }
+  function load() {
+    try { const raw = localStorage.getItem(KEY); if (raw) return JSON.parse(raw); } catch (e) {}
+    return null;
+  }
+
+  // ---------- puzzle ----------
+  function makePuzzle(idx) {
+    const entry = WORDS[idx];
+    const chars = Array.from(entry.w.normalize("NFC"));
+    const words = entry.w.split(" ");
+    let candidates = [];
+    let pos = 0;
+    const allLetters = [];
+    words.forEach((wd, wi) => {
+      const n = Array.from(wd).length;
+      for (let k = 0; k < n; k++) {
+        allLetters.push(pos + k);
+        if (!(wi === 0 && words.length > 1 && PREFIX.has(wd))) candidates.push(pos + k);
+      }
+      pos += n + 1;
+    });
+    if (candidates.length < 3) candidates = allLetters;
+    const hidden = shuffle(candidates).slice(0, 3).sort((a, b) => a - b);
+    const answer = hidden.map((i) => chars[i]);
+
+    const bad = new Set(answer);
+    const distract = new Set();
+    answer.forEach((c) => {
+      const g = VOWEL_GROUPS.find((gr) => gr.includes(c));
+      if (g) { const opts = Array.from(g).filter((x) => !bad.has(x)); if (opts.length) distract.add(opts[rand(opts.length)]); }
+    });
+    let guard = 0;
+    while (distract.size < 5 && guard++ < 200) {
+      const c = ANY[rand(ANY.length)];
+      if (!bad.has(c)) distract.add(c);
+    }
+    const tiles = shuffle([...answer, ...distract]).map((ch, i) => ({ id: i, ch }));
+    return { idx, chars, hidden, answer, tiles, filled: [null, null, null], status: "play" };
+  }
+
+  function nextWord() {
+    if (!S.deck.length) S.deck = shuffle(WORDS.map((_, i) => i));
+    S.puzzle = makePuzzle(S.deck.pop());
+  }
+
+  // ---------- rendering ----------
+  function currentPlayer() { return S.players[S.current] || null; }
+
+  function renderStage() {
+    const P = S.puzzle, entry = WORDS[P.idx], who = currentPlayer();
+    $("turnName").textContent = who ? who.name : "Chưa có học sinh";
+    $("roundChip").textContent = "Từ số " + (S.asked + 1);
+    $("clueEmoji").textContent = entry.e;
+    $("clueText").textContent = entry.h;
+
+    const word = $("word");
+    word.textContent = "";
+    let syll = document.createElement("div"); syll.className = "syll"; word.appendChild(syll);
+    const firstEmpty = P.filled.indexOf(null);
+    P.chars.forEach((c, i) => {
+      if (c === " ") { syll = document.createElement("div"); syll.className = "syll"; word.appendChild(syll); return; }
+      const h = P.hidden.indexOf(i);
+      let el;
+      if (h === -1) {
+        el = document.createElement("div"); el.className = "cell"; el.textContent = up(c);
+      } else if (P.status === "play") {
+        el = document.createElement("button"); el.type = "button"; el.className = "cell";
+        const t = P.filled[h];
+        if (t !== null) { el.textContent = up(P.tiles[t].ch); el.classList.add("filled"); el.setAttribute("aria-label", "Xoá chữ " + P.tiles[t].ch); }
+        else { el.setAttribute("aria-label", "Ô trống số " + (h + 1)); if (h === firstEmpty) el.classList.add("next"); }
+        el.addEventListener("click", () => { if (P.filled[h] !== null) { P.filled[h] = null; save(); render(); } });
+      } else {
+        el = document.createElement("div");
+        const t = P.filled[h];
+        const ok = t !== null && P.tiles[t].ch === P.answer[h];
+        el.className = "cell " + (ok ? "right" : "wrong");
+        el.textContent = up(P.answer[h]);
+      }
+      syll.appendChild(el);
+    });
+
+    const tiles = $("tiles");
+    tiles.textContent = "";
+    tiles.hidden = P.status !== "play";
+    $("howto").hidden = P.status !== "play";
+    P.tiles.forEach((t) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "tile"; b.textContent = up(t.ch);
+      b.setAttribute("aria-label", "Chữ " + t.ch);
+      b.disabled = P.filled.includes(t.id);
+      b.addEventListener("click", () => {
+        const slot = P.filled.indexOf(null);
+        if (slot === -1) return;
+        P.filled[slot] = t.id; save(); render();
+      });
+      tiles.appendChild(b);
+    });
+
+    const fb = $("feedback");
+    const full = !P.filled.includes(null);
+    $("checkBtn").hidden = P.status !== "play";
+    $("checkBtn").disabled = !full || !who;
+    $("nextBtn").hidden = P.status === "play";
+    $("skipBtn").hidden = P.status !== "play";
+    if (!who) {
+      fb.hidden = false; fb.className = "feedback info";
+      fb.textContent = "Nhập tên học sinh ở khung bên cạnh để bắt đầu chơi.";
+    } else if (P.status === "right") {
+      fb.hidden = false; fb.className = "feedback ok";
+      fb.textContent = "Đúng rồi! " + who.name + " được 1 cây kẹo mút 🍭 — đáp án: " + up(entry.w);
+    } else if (P.status === "wrong") {
+      fb.hidden = false; fb.className = "feedback no";
+      fb.textContent = "Chưa đúng rồi. Đáp án là: " + up(entry.w) + ". Cố lên lượt sau nhé!";
+    } else fb.hidden = true;
+  }
+
+  function ranked() {
+    return S.players.map((p, i) => ({ ...p, i })).sort((a, b) => b.score - a.score || a.i - b.i);
+  }
+  function rankOf(list) {
+    // dense-ish competition ranking: ties share a rank
+    let r = 0, prev = null;
+    return list.map((p, k) => { if (p.score !== prev) { r = k + 1; prev = p.score; } return r; });
+  }
+
+  function renderRoster() {
+    const ul = $("roster"); ul.textContent = "";
+    $("countLbl").textContent = S.players.length ? S.players.length + " bạn" : "";
+    if (!S.players.length) {
+      const li = document.createElement("li"); li.className = "empty";
+      li.textContent = "Chưa có tên nào. Thêm tên các bạn để vào chơi!";
+      ul.appendChild(li);
+    }
+    const list = ranked(), ranks = rankOf(list);
+    const rankById = {}; list.forEach((p, k) => (rankById[p.id] = ranks[k]));
+    // keep join order so the rotation is easy to follow; show rank number beside it
+    S.players.forEach((p, i) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "pick" + (i === S.current ? " current" : "") + (S.lastBump === p.id ? " bump" : "");
+      b.title = "Chọn " + p.name + " trả lời";
+      const leader = p.score > 0 && rankById[p.id] === 1;
+      b.innerHTML = '<span class="rank"></span><span class="nm"></span><span class="score"><span class="pop">🍭</span><span class="n"></span></span>';
+      b.querySelector(".rank").textContent = leader ? "👑" : "#" + rankById[p.id];
+      b.querySelector(".nm").textContent = p.name;
+      b.querySelector(".n").textContent = p.score;
+      b.addEventListener("click", () => {
+        if (S.puzzle.status !== "play") return;
+        S.current = i; save(); render();
+      });
+      const del = document.createElement("button");
+      del.type = "button"; del.className = "del"; del.textContent = "×";
+      del.setAttribute("aria-label", "Xoá tên " + p.name);
+      del.addEventListener("click", () => removePlayer(i));
+      li.append(b, del); ul.appendChild(li);
+    });
+    S.lastBump = null;
+    const total = S.players.reduce((s, p) => s + p.score, 0);
+    $("stats").innerHTML = "<span>Đã hỏi <b></b> từ</span><span>·</span><span>Đã phát <b></b> 🍭</span>";
+    const bs = $("stats").querySelectorAll("b"); bs[0].textContent = S.asked; bs[1].textContent = total;
+  }
+
+  function renderTheme() {
+    const t = S.theme;
+    if (t) document.documentElement.setAttribute("data-theme", t); else document.documentElement.removeAttribute("data-theme");
+    const dark = t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    const btn = $("themeBtn");
+    btn.setAttribute("aria-pressed", String(dark));
+    btn.innerHTML = dark
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg>Màn hình ngày'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>Màn hình đêm';
+  }
+
+  function render() { renderStage(); renderRoster(); }
+
+  // ---------- actions ----------
+  function addPlayer(name) {
+    name = name.trim().replace(/\s+/g, " ");
+    if (!name) return;
+    S.players.push({ id: Date.now().toString(36) + rand(1e6).toString(36), name, score: 0 });
+    if (S.players.length === 1) S.current = 0;
+    save(); render();
+  }
+  function removePlayer(i) {
+    S.players.splice(i, 1);
+    if (S.current > i) S.current--;
+    if (S.current >= S.players.length) S.current = 0;
+    save(); render();
+  }
+  function check() {
+    const P = S.puzzle, who = currentPlayer();
+    if (!who || P.filled.includes(null)) return;
+    const ok = P.filled.every((t, k) => P.tiles[t].ch === P.answer[k]);
+    P.status = ok ? "right" : "wrong";
+    S.asked++;
+    if (ok) { who.score++; S.correct++; S.lastBump = who.id; celebrate(); chime(true); }
+    else { chime(false); }
+    save(); render();
+    if (!ok) { const w = $("word"); w.classList.remove("shake"); void w.offsetWidth; w.classList.add("shake"); }
+    $("nextBtn").focus({ preventScroll: true });
+  }
+  function next() {
+    if (S.players.length) S.current = (S.current + 1) % S.players.length;
+    nextWord(); save(); render();
+  }
+  function skip() { nextWord(); save(); render(); }
+
+  function showResults() {
+    const list = ranked(), ranks = rankOf(list);
+    const pod = $("podium"); pod.textContent = "";
+    const fl = $("finalList"); fl.textContent = "";
+    if (!list.length) {
+      $("resTitle").textContent = "Chưa có ai chơi";
+      $("resSub").textContent = "Thêm tên học sinh rồi bắt đầu đoán từ nhé.";
+    } else {
+      const top = list[0].score;
+      const winners = list.filter((p) => p.score === top && top > 0);
+      if (!winners.length) { $("resTitle").textContent = "Chưa ai có kẹo mút"; $("resSub").textContent = "Chơi tiếp để giành cây kẹo đầu tiên!"; }
+      else if (winners.length === 1) { $("resTitle").textContent = "🎉 " + winners[0].name + " thắng!"; $("resSub").textContent = "Nhiều kẹo mút nhất với " + top + " 🍭"; }
+      else { $("resTitle").textContent = "🎉 Đồng hạng nhất!"; $("resSub").textContent = winners.map((w) => w.name).join(", ") + " cùng có " + top + " 🍭"; }
+      const order = [1, 0, 2].filter((k) => list[k]);
+      order.forEach((k) => {
+        const p = list[k];
+        const r = ranks[k];
+        const d = document.createElement("div"); d.className = "step p" + Math.min(r, 3);
+        d.innerHTML = '<div class="crown"></div><div class="who"></div><div class="pops"></div><div class="block"></div>';
+        d.querySelector(".crown").textContent = r === 1 && p.score > 0 ? "👑" : "";
+        d.querySelector(".who").textContent = p.name;
+        d.querySelector(".pops").textContent = p.score + " 🍭";
+        d.querySelector(".block").textContent = r;
+        pod.appendChild(d);
+      });
+      list.slice(3).forEach((p, k) => {
+        const li = document.createElement("li");
+        li.innerHTML = "<span></span><span></span><span></span>";
+        li.children[0].textContent = ranks[k + 3]; li.children[1].textContent = p.name; li.children[2].textContent = p.score + " 🍭";
+        fl.appendChild(li);
+      });
+      if (winners.length) celebrate(24);
+    }
+    fl.hidden = !fl.children.length;
+    $("resultsOv").hidden = false;
+    $("resumeBtn").focus();
+  }
+
+  function doReset(keepNames) {
+    const names = keepNames ? S.players.map((p) => ({ ...p, score: 0 })) : [];
+    const theme = S.theme;
+    S = fresh(names); S.theme = theme;
+    nextWord(); save(); render();
+    $("resetOv").hidden = true; $("resultsOv").hidden = true;
+    if (!keepNames) $("nameInput").focus();
+  }
+
+  // ---------- effects ----------
+  function celebrate(n = 14) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rain = document.createElement("div"); rain.className = "rain";
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement("span"); s.textContent = "🍭";
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.animationDelay = Math.random() * 0.6 + "s";
+      s.style.fontSize = 1.6 + Math.random() * 1.6 + "rem";
+      rain.appendChild(s);
+    }
+    document.body.appendChild(rain);
+    setTimeout(() => rain.remove(), 2800);
+  }
+  let actx = null;
+  function chime(good) {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const notes = good ? [523.25, 659.25, 783.99] : [311.13, 233.08];
+      notes.forEach((f, i) => {
+        const o = actx.createOscillator(), g = actx.createGain();
+        o.type = good ? "triangle" : "sine"; o.frequency.value = f;
+        const t = actx.currentTime + i * 0.12;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+        o.connect(g).connect(actx.destination); o.start(t); o.stop(t + 0.32);
+      });
+    } catch (e) {}
+  }
+
+  // ---------- wiring ----------
+  $("addForm").addEventListener("submit", (e) => { e.preventDefault(); addPlayer($("nameInput").value); $("nameInput").value = ""; $("nameInput").focus(); });
+  $("checkBtn").addEventListener("click", check);
+  $("nextBtn").addEventListener("click", next);
+  $("skipBtn").addEventListener("click", skip);
+  $("stopBtn").addEventListener("click", showResults);
+  $("resumeBtn").addEventListener("click", () => { $("resultsOv").hidden = true; });
+  $("resetBtn").addEventListener("click", () => { $("resetOv").hidden = false; $("rsKeep").focus(); });
+  $("resReset").addEventListener("click", () => { $("resultsOv").hidden = true; $("resetOv").hidden = false; $("rsKeep").focus(); });
+  $("rsKeep").addEventListener("click", () => doReset(true));
+  $("rsAll").addEventListener("click", () => doReset(false));
+  $("rsCancel").addEventListener("click", () => { $("resetOv").hidden = true; });
+  $("themeBtn").addEventListener("click", () => {
+    const dark = document.documentElement.getAttribute("data-theme")
+      ? document.documentElement.getAttribute("data-theme") === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    S.theme = dark ? "light" : "dark"; save(); renderTheme();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { $("resultsOv").hidden = true; $("resetOv").hidden = true; }
+  });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", renderTheme);
+
+  function start(data) {
+    S = (data && data.players) ? data : (load() || fresh());
+    if (!S.deck) S.deck = shuffle(WORDS.map((_, i) => i));
+    if (!S.puzzle || !WORDS[S.puzzle.idx]) nextWord();
+    renderTheme(); render();
+  }
+  window.claude?.hot?.snapshot?.(() => S);
+  window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+})();
+</script>
