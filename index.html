@@ -1,9 +1,18 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eef6f2">
 <title>Cơ thể của em</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
 /* Layout: classroom board — big puzzle stage on the left, player roll + lollipop tally on the right; stacks on phones. */
 :root {
   --bg: #eef6f2;
@@ -58,7 +67,7 @@ body::after {
   content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background: var(--stars); background-size: 420px 420px;
 }
-button { font: inherit; color: inherit; cursor: pointer; }
+button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
 button:focus-visible, input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 
 .wrap {
@@ -84,7 +93,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px
   padding: 8px 16px; font-weight: 800; font-size: .95rem; display: inline-flex; align-items: center; gap: 8px;
   box-shadow: 0 2px 0 var(--line); transition: transform .1s ease, background-color .2s;
 }
-.btn:hover { transform: translateY(-1px); }
+@media (hover: hover) { .btn:hover { transform: translateY(-1px); } .tile:hover:not(:disabled) { transform: translateY(-2px); } }
 .btn:active { transform: translateY(1px); box-shadow: none; }
 .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 .btn.primary { background: var(--candy); border-color: var(--candy); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--candy) 60%, #000); }
@@ -136,7 +145,6 @@ button.cell.next { animation: pulse 1.2s ease-in-out infinite; }
   font-family: var(--f-display); font-weight: 800; font-size: 1.8rem; line-height: 1;
   transition: transform .08s ease, opacity .2s;
 }
-.tile:hover:not(:disabled) { transform: translateY(-2px); }
 .tile:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
 .tile:disabled { opacity: .18; cursor: default; box-shadow: none; transform: translateY(4px); }
 
@@ -214,13 +222,28 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
   .rain { display: none; }
 }
 @media (max-width: 480px) {
+  .wrap { padding-block: 12px 28px; gap: 14px; }
+  .brand svg { width: 42px; height: 42px; }
+  .controls { width: 100%; }
+  .controls .btn { flex: 1 1 auto; justify-content: center; padding: 8px 12px; font-size: .88rem; }
+  .stage { padding: 16px 14px 20px; gap: 16px; border-radius: 18px; }
+  .turn-name { font-size: 1.45rem; }
+  .clue { padding: 10px 12px; gap: 12px; }
+  .clue-emoji { font-size: 2.1rem; }
+  .clue-text strong { font-size: 1.05rem; }
+  .tiles { gap: 8px; }
+  .actions .btn.big { flex: 1 1 auto; justify-content: center; padding: 12px 18px; }
+  .modal { padding: 18px 14px; }
+  .modal h2 { font-size: 1.5rem; }
+  .step.p1 .block { height: 96px; } .step.p2 .block { height: 70px; } .step.p3 .block { height: 52px; }
   .syll { gap: 5px; }
   .cell { width: 40px; height: 52px; border-radius: 10px; font-size: 1.6rem; }
   .tile { min-width: 48px; height: 50px; font-size: 1.5rem; }
   .word { gap: 10px 14px; }
 }
 </style>
-
+</head>
+<body>
 <div class="wrap">
   <header class="top">
     <div class="brand">
@@ -687,3 +710,5 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
   window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
 })();
 </script>
+</body>
+</html>
