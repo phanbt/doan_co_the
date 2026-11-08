@@ -32,6 +32,7 @@ img { max-width: 100%; }
   --f-display: "Baloo 2", "Nunito", system-ui, sans-serif;
   --f-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
   --stars: none;
+  --skin: #f5c6a0; --skin-d: #c98b63; --hair: #3b2a24; --cheek: #f4a3a8; --lip: #e0607a; --eye: #ffffff;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -40,6 +41,7 @@ img { max-width: 100%; }
     --leaf: #45d3bd; --leaf-soft: #173d43; --blank: #24305a;
     --shadow: 0 2px 0 rgba(0,0,0,.25), 0 12px 30px -12px rgba(0,0,0,.6);
     --stars: radial-gradient(1.5px 1.5px at 12% 18%, #fff8 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, #fff6 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 12%, #fff7 50%, transparent 51%), radial-gradient(1px 1px at 81% 40%, #fff6 50%, transparent 51%), radial-gradient(2px 2px at 92% 85%, #ffd25e88 50%, transparent 51%), radial-gradient(1px 1px at 6% 90%, #fff5 50%, transparent 51%), radial-gradient(1.5px 1.5px at 70% 62%, #fff5 50%, transparent 51%);
+    --skin: #eebb93; --skin-d: #b87a55; --hair: #6b4636; --cheek: #e98f98; --lip: #ea6b85; --eye: #f4f6ff;
     color-scheme: dark;
   }
 }
@@ -49,6 +51,7 @@ img { max-width: 100%; }
   --leaf: #45d3bd; --leaf-soft: #173d43; --blank: #24305a;
   --shadow: 0 2px 0 rgba(0,0,0,.25), 0 12px 30px -12px rgba(0,0,0,.6);
   --stars: radial-gradient(1.5px 1.5px at 12% 18%, #fff8 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, #fff6 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 12%, #fff7 50%, transparent 51%), radial-gradient(1px 1px at 81% 40%, #fff6 50%, transparent 51%), radial-gradient(2px 2px at 92% 85%, #ffd25e88 50%, transparent 51%), radial-gradient(1px 1px at 6% 90%, #fff5 50%, transparent 51%), radial-gradient(1.5px 1.5px at 70% 62%, #fff5 50%, transparent 51%);
+  --skin: #eebb93; --skin-d: #b87a55; --hair: #6b4636; --cheek: #e98f98; --lip: #ea6b85; --eye: #f4f6ff;
   color-scheme: dark;
 }
 
@@ -116,7 +119,22 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: var(--sun-soft); color: var(--ink); font-weight: 800; font-size: .85rem; font-variant-numeric: tabular-nums; }
 
 .clue { display: flex; align-items: center; gap: 16px; background: var(--surface-2); border: 2px dashed var(--line); border-radius: 18px; padding: 14px 18px; }
-.clue-emoji { font-size: 2.6rem; line-height: 1; flex: none; }
+.pic { margin: 0; background: var(--surface-2); border: 2px solid var(--line); border-radius: 18px; padding: 12px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.pic svg { display: block; height: 210px; width: auto; max-width: 100%; }
+.pic figcaption { font-weight: 800; color: var(--muted); font-size: .92rem; }
+.pic .skin { fill: var(--skin); } .pic .skin-d { fill: var(--skin-d); } .pic .hair { fill: var(--hair); }
+.pic .limb { fill: none; stroke: var(--skin); stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; }
+.pic .leg { stroke-width: 16; }
+.pic .finger { fill: none; stroke: var(--skin); stroke-width: 4.5; stroke-linecap: round; }
+.pic .shorts { fill: var(--leaf); }
+.pic .brow { fill: none; stroke: var(--hair); stroke-width: 5; stroke-linecap: round; }
+.pic .lash { fill: none; stroke: var(--hair); stroke-width: 2.4; stroke-linecap: round; }
+.pic .eyew { fill: var(--eye); } .pic .pupil { fill: var(--hair); }
+.pic .line { fill: none; stroke: var(--skin-d); stroke-width: 3; stroke-linecap: round; }
+.pic .thin { stroke-width: 1.8; }
+.pic .cheek { fill: var(--cheek); opacity: .8; } .pic .lip { fill: var(--lip); }
+.pic .hl { fill: var(--candy); fill-opacity: .16; stroke: var(--candy); stroke-width: 3.5; stroke-dasharray: 7 5; animation: hl 1.4s ease-in-out infinite; }
+@keyframes hl { 50% { fill-opacity: .32; stroke-width: 5; } }
 .clue-text { min-width: 0; }
 .clue-text small { display: block; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 800; }
 .clue-text strong { font-size: 1.2rem; font-weight: 800; }
@@ -229,7 +247,7 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
   .stage { padding: 16px 14px 20px; gap: 16px; border-radius: 18px; }
   .turn-name { font-size: 1.45rem; }
   .clue { padding: 10px 12px; gap: 12px; }
-  .clue-emoji { font-size: 2.1rem; }
+  .pic svg { height: 160px; }
   .clue-text strong { font-size: 1.05rem; }
   .tiles { gap: 8px; }
   .actions .btn.big { flex: 1 1 auto; justify-content: center; padding: 12px 18px; }
@@ -282,8 +300,12 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
         <span class="chip" id="roundChip">Từ số 1</span>
       </div>
 
+      <figure class="pic" id="pic">
+        <div id="picArt"></div>
+        <figcaption>Phần được khoanh tròn là gì?</figcaption>
+      </figure>
+
       <div class="clue">
-        <div class="clue-emoji" id="clueEmoji">👃</div>
         <div class="clue-text">
           <small>Gợi ý</small>
           <strong id="clueText">…</strong>
@@ -346,35 +368,80 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
 (() => {
   // ---------- word bank: external body parts only ----------
   const WORDS = [
-    { w: "miệng", e: "👄", h: "Dùng để ăn và nói" },
-    { w: "đôi mắt", e: "👀", h: "Dùng để nhìn" },
-    { w: "đôi tai", e: "👂", h: "Dùng để nghe" },
-    { w: "cái mũi", e: "👃", h: "Dùng để ngửi" },
-    { w: "mái tóc", e: "💇", h: "Mọc trên đầu, dài ra thì phải cắt" },
-    { w: "lông mày", e: "🤨", h: "Nằm ngay phía trên mắt" },
-    { w: "lông mi", e: "👁️", h: "Những sợi nhỏ ở mép mí mắt" },
-    { w: "cái trán", e: "🙂", h: "Phần ở trên lông mày" },
-    { w: "cái cằm", e: "🧔", h: "Phần ở dưới miệng" },
-    { w: "đôi má", e: "😊", h: "Hai bên mũi, ửng hồng khi ngại" },
-    { w: "đôi môi", e: "💋", h: "Bao quanh miệng" },
-    { w: "cái cổ", e: "🧣", h: "Nối đầu với thân, nơi quàng khăn" },
-    { w: "bờ vai", e: "🎒", h: "Nơi em đeo quai cặp sách" },
-    { w: "cánh tay", e: "💪", h: "Từ vai xuống đến bàn tay" },
-    { w: "bàn tay", e: "✋", h: "Có năm ngón, dùng để cầm nắm" },
-    { w: "ngón tay", e: "☝️", h: "Mỗi bàn tay có năm cái" },
-    { w: "móng tay", e: "💅", h: "Cần cắt ngắn cho sạch sẽ" },
-    { w: "khuỷu tay", e: "🦾", h: "Chỗ gập ở giữa cánh tay" },
-    { w: "cổ tay", e: "⌚", h: "Nơi đeo đồng hồ" },
-    { w: "bàn chân", e: "🦶", h: "Dùng để đứng và đi" },
-    { w: "ngón chân", e: "🩴", h: "Mỗi bàn chân có năm cái" },
-    { w: "đầu gối", e: "🦵", h: "Chỗ gập ở giữa chân" },
-    { w: "gót chân", e: "👠", h: "Phần phía sau của bàn chân" },
-    { w: "bắp chân", e: "🏃", h: "Phần to tròn ở sau cẳng chân" },
-    { w: "cái bụng", e: "🍚", h: "Kêu ọc ọc khi em đói" },
-    { w: "cái lưng", e: "🧍", h: "Phía sau thân người" },
-    { w: "cái rốn", e: "🎯", h: "Chấm nhỏ ở giữa bụng" },
-    { w: "mái đầu", e: "🧑", h: "Phần cao nhất của cơ thể" },
+    { w: "miệng", e: "👄", h: "Dùng để ăn và nói", v: "face", hl: [[100, 149, 27, 15]] },
+    { w: "đôi mắt", e: "👀", h: "Dùng để nhìn", v: "face", hl: [[75, 106, 18, 14], [125, 106, 18, 14]] },
+    { w: "đôi tai", e: "👂", h: "Dùng để nghe", v: "face", hl: [[41, 108, 17, 24], [159, 108, 17, 24]] },
+    { w: "cái mũi", e: "👃", h: "Dùng để ngửi", v: "face", hl: [[100, 121, 13, 16]] },
+    { w: "mái tóc", e: "💇", h: "Mọc trên đầu, dài ra thì phải cắt", v: "face", hl: [[100, 56, 68, 30]] },
+    { w: "lông mày", e: "🤨", h: "Nằm ngay phía trên mắt", v: "face", hl: [[75, 87, 18, 9], [125, 87, 18, 9]] },
+    { w: "lông mi", e: "👁️", h: "Những sợi nhỏ ở mép mí mắt", v: "face", hl: [[75, 97, 15, 7], [125, 97, 15, 7]] },
+    { w: "cái trán", e: "🙂", h: "Phần ở trên lông mày", v: "face", hl: [[100, 77, 30, 8]] },
+    { w: "cái cằm", e: "🧔", h: "Phần ở dưới miệng", v: "face", hl: [[100, 165, 20, 9]] },
+    { w: "đôi má", e: "😊", h: "Hai bên mũi, ửng hồng khi ngại", v: "face", hl: [[62, 132, 15, 13], [138, 132, 15, 13]] },
+    { w: "đôi môi", e: "💋", h: "Bao quanh miệng", v: "face", hl: [[100, 149, 24, 13]] },
+    { w: "cái cổ", e: "🧣", h: "Nối đầu với thân, nơi quàng khăn", v: "front", hl: [[100, 70, 13, 10]] },
+    { w: "bờ vai", e: "🎒", h: "Nơi em đeo quai cặp sách", v: "front", hl: [[76, 83, 12, 10], [124, 83, 12, 10]] },
+    { w: "cánh tay", e: "💪", h: "Từ vai xuống đến bàn tay", v: "front", hl: [[62, 122, 11, 44, 25], [138, 122, 11, 44, -25]] },
+    { w: "bàn tay", e: "✋", h: "Có năm ngón, dùng để cầm nắm", v: "front", hl: [[49, 174, 14, 17], [151, 174, 14, 17]] },
+    { w: "ngón tay", e: "☝️", h: "Mỗi bàn tay có năm cái", v: "front", hl: [[49, 182, 12, 9], [151, 182, 12, 9]] },
+    { w: "móng tay", e: "💅", h: "Cần cắt ngắn cho sạch sẽ", v: "front", hl: [[49, 186, 11, 6], [151, 186, 11, 6]] },
+    { w: "khuỷu tay", e: "🦾", h: "Chỗ gập ở giữa cánh tay", v: "front", hl: [[56, 122, 10, 10], [144, 122, 10, 10]] },
+    { w: "cổ tay", e: "⌚", h: "Nơi đeo đồng hồ", v: "front", hl: [[50, 159, 9, 7], [150, 159, 9, 7]] },
+    { w: "bàn chân", e: "🦶", h: "Dùng để đứng và đi", v: "front", hl: [[80, 245, 17, 9], [120, 245, 17, 9]] },
+    { w: "ngón chân", e: "🩴", h: "Mỗi bàn chân có năm cái", v: "front", hl: [[70, 245, 8, 7], [130, 245, 8, 7]] },
+    { w: "đầu gối", e: "🦵", h: "Chỗ gập ở giữa chân", v: "front", hl: [[87, 205, 11, 11], [113, 205, 11, 11]] },
+    { w: "gót chân", e: "👠", h: "Phần phía sau của bàn chân", v: "back", hl: [[86, 249, 9, 8], [114, 249, 9, 8]] },
+    { w: "bắp chân", e: "🏃", h: "Phần to tròn ở sau cẳng chân", v: "back", hl: [[86, 222, 11, 16], [114, 222, 11, 16]] },
+    { w: "cái bụng", e: "🍚", h: "Kêu ọc ọc khi em đói", v: "front", hl: [[100, 122, 24, 17]] },
+    { w: "cái lưng", e: "🧍", h: "Phía sau thân người", v: "back", hl: [[100, 110, 26, 32]] },
+    { w: "cái rốn", e: "🎯", h: "Chấm nhỏ ở giữa bụng", v: "front", hl: [[100, 127, 8, 8]] },
+    { w: "mái đầu", e: "🧑", h: "Phần cao nhất của cơ thể", v: "face", hl: [[100, 100, 76, 84]] },
   ];
+
+  // ---------- pictures: a simple child figure; the asked part is circled ----------
+  const HEAD_SMALL = '<circle cx="76" cy="42" r="5" class="skin"/><circle cx="124" cy="42" r="5" class="skin"/><circle cx="100" cy="40" r="24" class="skin"/>';
+  const ARMS = '<path class="limb" d="M74 84 L56 122 L50 160"/><path class="limb" d="M126 84 L144 122 L150 160"/>'
+    + '<circle cx="49" cy="170" r="9" class="skin"/><circle cx="151" cy="170" r="9" class="skin"/>'
+    + '<path class="finger" d="M43 173 l-3 10 M47 175 l-1 11 M51 175 l1 11 M55 173 l3 10 M157 173 l3 10 M153 175 l1 11 M149 175 l-1 11 M145 173 l-3 10"/>';
+  const BODY = '<rect x="92" y="60" width="16" height="20" class="skin"/>' + ARMS
+    + '<rect x="70" y="76" width="60" height="70" rx="16" class="skin"/>'
+    + '<path class="limb leg" d="M87 172 L87 205 L86 238"/><path class="limb leg" d="M113 172 L113 205 L114 238"/>'
+    + '<path class="shorts" d="M70 134 H130 V178 H104 L100 162 L96 178 H70Z"/>';
+  const PICS = {
+    face: '<svg viewBox="0 0 200 200" role="img" aria-label="Hình khuôn mặt">'
+      + '<ellipse cx="100" cy="90" rx="66" ry="62" class="hair"/>'
+      + '<rect x="86" y="158" width="28" height="34" rx="8" class="skin"/>'
+      + '<ellipse cx="42" cy="108" rx="12" ry="18" class="skin"/><ellipse cx="158" cy="108" rx="12" ry="18" class="skin"/>'
+      + '<path class="line" d="M44 100 q-6 8 0 16 M156 100 q6 8 0 16"/>'
+      + '<ellipse cx="100" cy="108" rx="57" ry="62" class="skin"/>'
+      + '<path class="hair" d="M43 102 C38 52 70 30 100 30 C130 30 162 52 157 102 C152 86 142 74 130 68 C112 74 86 74 70 66 C58 72 48 86 43 102Z"/>'
+      + '<path class="brow" d="M62 91 Q75 82 88 89"/><path class="brow" d="M112 89 Q125 82 138 91"/>'
+      + '<ellipse cx="75" cy="106" rx="11" ry="8" class="eyew"/><circle cx="76" cy="107" r="5" class="pupil"/>'
+      + '<ellipse cx="125" cy="106" rx="11" ry="8" class="eyew"/><circle cx="124" cy="107" r="5" class="pupil"/>'
+      + '<path class="lash" d="M65 101 l-4 -5 M71 98.5 l-1.5 -6 M78 98.5 l1 -6 M84 100.5 l4 -5 M116 100.5 l-4 -5 M122 98.5 l-1 -6 M129 98.5 l1.5 -6 M135 101 l4 -5"/>'
+      + '<path class="line" d="M100 112 Q92 128 98 130 Q102 131 106 128"/>'
+      + '<circle cx="63" cy="132" r="10" class="cheek"/><circle cx="137" cy="132" r="10" class="cheek"/>'
+      + '<path class="lip" d="M82 148 Q91 140 100 145 Q109 140 118 148 Q100 163 82 148Z"/>'
+      + '<path class="line thin" d="M84 148 Q100 152 116 148"/>'
+      + '<path class="line thin" d="M92 166 Q100 170 108 166"/>',
+    front: '<svg viewBox="0 0 200 262" role="img" aria-label="Hình cơ thể, nhìn phía trước">' + BODY
+      + '<circle cx="100" cy="127" r="2.6" class="skin-d"/>'
+      + '<ellipse cx="80" cy="245" rx="12" ry="6" class="skin"/><ellipse cx="120" cy="245" rx="12" ry="6" class="skin"/>'
+      + HEAD_SMALL
+      + '<path class="hair" d="M76 40 C75 15 125 15 124 40 C118 28 102 25 86 30 C81 33 78 36 76 40Z"/>'
+      + '<circle cx="92" cy="42" r="2.6" class="pupil"/><circle cx="108" cy="42" r="2.6" class="pupil"/>'
+      + '<path class="line thin" d="M93 50 Q100 55 107 50"/>',
+    back: '<svg viewBox="0 0 200 262" role="img" aria-label="Hình cơ thể, nhìn từ phía sau">' + BODY
+      + '<path class="line thin" d="M100 84 V132 M84 92 q6 8 0 16 M116 92 q-6 8 0 16"/>'
+      + '<ellipse cx="86" cy="247" rx="9" ry="8" class="skin"/><ellipse cx="114" cy="247" rx="9" ry="8" class="skin"/>'
+      + HEAD_SMALL
+      + '<circle cx="100" cy="38" r="25" class="hair"/>',
+  };
+  function drawPic(entry) {
+    const rings = entry.hl.map(([cx, cy, rx, ry, rot]) =>
+      `<ellipse class="hl" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"${rot ? ` transform="rotate(${rot} ${cx} ${cy})"` : ""}/>`).join("");
+    $("picArt").innerHTML = PICS[entry.v] + rings + "</svg>";
+  }
   const PREFIX = new Set(["cái", "đôi", "mái", "bờ"]);
   const VOWEL_GROUPS = ["aàáảãạ","ăằắẳẵặ","âầấẩẫậ","eèéẻẽẹ","êềếểễệ","iìíỉĩị","oòóỏõọ","ôồốổỗộ","ơờớởỡợ","uùúủũụ","ưừứửữự","yỳýỷỹỵ"];
   const CONSONANTS = "bcdđghklmnpqrstvx";
@@ -446,7 +513,7 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
     const P = S.puzzle, entry = WORDS[P.idx], who = currentPlayer();
     $("turnName").textContent = who ? who.name : "Chưa có học sinh";
     $("roundChip").textContent = "Từ số " + (S.asked + 1);
-    $("clueEmoji").textContent = entry.e;
+    drawPic(entry);
     $("clueText").textContent = entry.h;
 
     const word = $("word");
