@@ -209,6 +209,8 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
 .stats { display: flex; gap: 8px; flex-wrap: wrap; border-top: 2px dashed var(--line); padding-top: 12px; color: var(--muted); font-size: .88rem; font-weight: 700; }
 .stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
+.credit { margin: 0; text-align: left; color: var(--muted); font-size: .85rem; font-weight: 700; }
+
 /* ---------- modal ---------- */
 .overlay { position: fixed; inset: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 55%, rgba(0,0,0,.55)); display: grid; place-items: center;
   padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
@@ -337,6 +339,10 @@ form.add input::placeholder { color: var(--muted); font-weight: 600; }
       <div class="stats" id="stats"></div>
     </aside>
   </main>
+
+  <footer>
+    <p class="credit">© PHAN Bá Thông - Lạc Hồng Singapore</p>
+  </footer>
 </div>
 
 <div class="overlay" id="resultsOv" hidden>
